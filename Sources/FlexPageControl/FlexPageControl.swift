@@ -116,10 +116,9 @@ public class FlexPageControl: UIControl {
         
         let xPos = touch.location(in: self).x
         let xPer = xPos / self.frame.size.width
-        
+        valueChangeOnTap = true
         currentValue = Int(CGFloat(numberOfPages) * xPer)
         isSwiped = true
-        valueChangeOnTap = true
         
         return true
     }
@@ -128,13 +127,12 @@ public class FlexPageControl: UIControl {
         super.endTracking(touch, with: event)
         if isSwiped { return }
         
+        valueChangeOnTap = true
         if (touch?.location(in: self).x ?? 0) > self.frame.midX {
             currentValue += 1
         } else {
             currentValue -= 1
         }
-        
-        valueChangeOnTap = true
     }
     
     private func generateSingleDot() -> UIView {
