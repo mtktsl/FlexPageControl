@@ -80,6 +80,8 @@ public class FlexPageControl: UIControl {
     private var dotContainerWidthConstraint: NSLayoutConstraint?
     private var dotContainerHeightConstraint: NSLayoutConstraint?
     
+    private var isSwiped = false
+    
     public init() {
         super.init(frame: .zero)
         setupDotContainer()
@@ -103,6 +105,7 @@ public class FlexPageControl: UIControl {
     
     public override func beginTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
         super.beginTracking(touch, with: event)
+        isSwiped = false
         return true
     }
     
@@ -113,12 +116,14 @@ public class FlexPageControl: UIControl {
         let xPer = xPos / self.frame.size.width
         
         currentValue = Int(CGFloat(numberOfPages) * xPer)
-        
+        isSwiped = true
         return true
     }
     
     public override func endTracking(_ touch: UITouch?, with event: UIEvent?) {
         super.endTracking(touch, with: event)
+        if isSwiped { return }
+        
         if (touch?.location(in: self).x ?? 0) > self.frame.midX {
             currentValue += 1
         } else {
