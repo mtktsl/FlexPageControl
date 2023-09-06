@@ -5,7 +5,13 @@ enum Constants {
     static let midVisibleDotCount: Int = 2
 }
 
+public protocol FlexPageControlDelegate: AnyObject {
+    func onValueChange(_ sender: FlexPageControl, oldValue: Int, newValue: Int)
+}
+
 public class FlexPageControl: UIControl {
+    
+    public weak var delegate: FlexPageControlDelegate?
     
     public var currentValue: Int = 0 {
         didSet {
@@ -14,6 +20,7 @@ public class FlexPageControl: UIControl {
                 oldValue: oldValue,
                 newValue: currentValue
             )
+            delegate?.onValueChange(self, oldValue: oldValue, newValue: currentValue)
         }
     }
     public var numberOfPages: Int = 0 {

@@ -1,5 +1,16 @@
 # FlexPageControl
+ReadMe is currently work in progress. <br/>
 
-A description of this package.
-# FlexPageControl
-ReadMe is currently work in progress
+Sample initializer:
+```swift
+    lazy var flex: FlexPageControl = {
+        let flex = FlexPageControl()
+        flex.pageIndicatorTintColor = .white
+        flex.pageIndicatorBorderColor = .darkGray
+        flex.currentPageIndicatorTintColor = .systemPurple
+        flex.currentPageIndicatorBorderColor = .purple
+        flex.numberOfPages = 15
+        flex.delegate = self
+        return flex
+    }()
+```
