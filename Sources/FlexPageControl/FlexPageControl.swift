@@ -6,7 +6,7 @@ enum Constants {
 }
 
 public protocol FlexPageControlDelegate: AnyObject {
-    func onValueChange(_ sender: FlexPageControl, oldValue: Int, newValue: Int)
+    func onValueChange(_ sender: FlexPageControl, oldValue: Int, newValue: Int, didTap: Bool)
 }
 
 public class FlexPageControl: UIControl {
@@ -20,7 +20,8 @@ public class FlexPageControl: UIControl {
                 oldValue: oldValue,
                 newValue: currentValue
             )
-            delegate?.onValueChange(self, oldValue: oldValue, newValue: currentValue)
+            delegate?.onValueChange(self, oldValue: oldValue, newValue: currentValue, didTap: valueChangeOnTap)
+            valueChangeOnTap = false
         }
     }
     public var numberOfPages: Int = 0 {
@@ -81,6 +82,7 @@ public class FlexPageControl: UIControl {
     private var dotContainerHeightConstraint: NSLayoutConstraint?
     
     private var isSwiped = false
+    private var valueChangeOnTap = false
     
     public init() {
         super.init(frame: .zero)
@@ -117,6 +119,8 @@ public class FlexPageControl: UIControl {
         
         currentValue = Int(CGFloat(numberOfPages) * xPer)
         isSwiped = true
+        valueChangeOnTap = true
+        
         return true
     }
     
@@ -129,6 +133,8 @@ public class FlexPageControl: UIControl {
         } else {
             currentValue -= 1
         }
+        
+        valueChangeOnTap = true
     }
     
     private func generateSingleDot() -> UIView {
